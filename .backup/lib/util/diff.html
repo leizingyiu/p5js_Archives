@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>diff tool</title>
+    <style>
+        body {
+            width: 80vw;
+            margin: 0 auto;
+        }
+
+        div {
+            margin-top: 2em;
+        }
+
+        #inputTextArea {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            position: relative;
+            margin-top: 4em;
+        }
+
+        #inputTextArea textarea {
+            flex-basis: calc(50% - 2em);
+            /* flex-grow: 1; */
+            min-height: 20vh;
+        }
+
+        #inputTextArea::before {
+            content: attr(leftTitle);
+            position: absolute;
+            left: 0;
+            bottom: 100%;
+            text-align: left;
+            margin-bottom: 0.5em;
+        }
+
+        #inputTextArea::after {
+            content: attr(rightTitle);
+            position: absolute;
+            right: 0;
+            bottom: 100%;
+            text-align: right;
+            margin-bottom: 0.5em;
+        }
+
+        pre#display {
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="inputTextArea">
+        <textarea id="leftTextArea">loading, pls wait</textarea>
+        <textarea id="rightTextArea">loading, pls wait</textarea>
+    </div>
+    <div>
+        <label><input type="radio" id="diffChars" name="diffType" value="diffChars" checked>diffChars</label>
+        <label><input type="radio" id="diffWords" name="diffType" value="diffWords">diffWords</label>
+        <label><input type="radio" id="diffSentences" name="diffType" value="diffSentences">diffSentences</label>
+    </div>
+
+
+
+
+    <pre id="display">
+        loading, pls wait
+    </pre>
+    <!-- <script src="https://cdn.bootcdn.net/ajax/libs/jsdiff/5.0.0/diff.min.js"></script> -->
+    <script src="../libraries/diff.min.js"></script>
+    <script>
+        {
+            let one = 'beep boop',
+            other = 'beep boob blah',
+            color = '';
+            let span = null;
+            var diff = Diff.diffChars(one, other),
+                display = document.getElementById('display'),
+                fragment = document.createDocumentFragment();
+
+            diff.forEach((part) => {
+                // green for additions, red for deletions
+                // grey for common parts
+                const color = part.added ? 'green' :
+                    part.removed ? 'red' : 'grey';
+                span = document.createElement('span');
+                span.style.color = color;
+                span.appendChild(document
+                    .createTextNode(part.value));
+                fragment.appendChild(span);
+            });
+            display.innerHTML = '';
+            display.appendChild(fragment);
+            /* demo script from https://github.com/kpdecker/jsdiff */
+}
+
+
+        Object.defineProperty(window, 'diffType', {
+            get() {
+
+                return [...document.querySelectorAll('input[name="diffType"]')].filter(i => i.hasAttribute(
+                    'checked'))[0].value;
+            },
+            set(v) {
+                [...document.querySelectorAll(`input[name="diffType"]`)].map(d => d.removeAttribute(
+                    'checked'));
+                document.querySelector(`input[name="diffType"][value="${v}"]`).setAttribute('checked',
+                    'checked');
+            }
+        });
+
+
+
+        setTextAreaVal('leftTextArea', 'leftText');
+        setTextAreaVal('rightTextArea', 'rightText');
+
+        function setTextAreaVal(textareaId, valName) {
+
+            Object.defineProperty(window, valName, {
+                get() {
+                    return document.getElementById(textareaId).value;
+                },
+                set(v) {
+                    document.getElementById(textareaId).value = v;
+                    console.log(window[valName]);
+                }
+            });
+        }
+
+        ['#leftTextArea', '#rightTextArea', 'input[name="diffType"]'].map(selector => {
+            [...document.querySelectorAll(selector)].map(d => d.addEventListener('input                     ',
+                updateDiff));
+        });
+
+        function updateDiff() {
+            let newfragment = document.createDocumentFragment();
+
+            diff = Diff[diffType](leftText, rightText);
+
+            diff.forEach((part) => {
+                // green for additions, red for deletions
+                // grey for common parts
+                const color = part.added ? 'green' :
+                    part.removed ? 'red' : 'grey';
+                span = document.createElement('span');
+                span.style.color = color;
+                span.appendChild(document
+                    .createTextNode(part.value));
+                newfragment.appendChild(span);
+            });
+
+            display.innerHTML = '';
+            display.appendChild(newfragment);
+            hljs.initHighlightingOnLoad();
+        }
+    </script>
+
+
+
+    <script>
+        let url = new URL(document.location.href);
+        let varNameArray = ['leftText', 'rightText', 'diffType'];
+        varNameArray.map(v => {
+            if (url && url.searchParams.has(v)) {
+                window[v] = url.searchParams.get(v);
+            }
+        });
+
+        let fileVarDict = {
+            'leftFile': 'leftText',
+            'rightFile': 'rightText'
+        };
+        let hintTextDict = {
+            'leftText': 'leftTitle',
+            'rightText': 'rightTitle'
+        };
+
+        if (Object.keys(fileVarDict).some(k => url && url.searchParams.has(k))) {
+            display.innerHTML = 'loading, pls wait';
+        }
+        Object.keys(fileVarDict).map(k => {
+            if (url && url.searchParams.has(k)) {
+                display.innerHTML = 'loading, pls wait';
+                fetch(url.searchParams.get(k))
+                    .then(response => {
+                        return response.text()
+                    })
+                    .then(text => {
+                        window[fileVarDict[k]] = text;
+                        document.getElementById('inputTextArea').setAttribute(hintTextDict[fileVarDict[k]], url.searchParams.get(k));
+
+                    }).then(() => {
+                        updateDiff();
+                    })
+            }
+        })
+
+        updateDiff();
+    </script>
+
+    <!-- <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/atom-one-light.min.css"> -->
+    <link rel="stylesheet" href="./libraries/atom-one-light.min.css">
+
+    <!-- <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.0/highlight.min.js"></script> -->
+    <script src="./libraries/highlight.min.js"></script>
+
+    <script>
+        hljs.initHighlightingOnLoad();
+
+    </script>
+</body>
+
+</html>

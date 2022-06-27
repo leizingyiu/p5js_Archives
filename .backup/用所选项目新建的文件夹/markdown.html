@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>markdown reader</title>
+    <link rel="stylesheet" href="./lib/atom-one-light.min.css">
+    <link rel="stylesheet" href="./lib/markdown_yiu.css">
+</head>
+
+<body>
+    <script src="./lib/marked.min.js"></script>
+    <script src="./lib/highlight.min.js"></script>
+    <script src="./script/utils.js"></script>
+    <script>
+        const url = new URL(window.location.href);
+        mdPath = url.searchParams.get('mdpath');
+        console.log(mdPath);
+        if (!mdPath) {
+            mdPath = './readme.md';
+        }
+        console.log(mdPath);
+    </script>
+    <script src="./script/loadMarkdownFile.js">
+
+    </script>
+    <script>
+        loadReadmeFile(() => {
+            hljs.initHighlightingOnLoad();
+        });
+
+    </script>
+</body>
+
+</html>

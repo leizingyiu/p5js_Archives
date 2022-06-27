@@ -1,0 +1,125 @@
+<!-- 
+// Created: 2022/03/07 16:13:00
+// Last modified: "2022/06/15 16:15:39"
+ -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+
+  <title>examples of p5js Ctrler - by leizingyiu</title>
+  <link rel="stylesheet" type="text/css" href="./style/style.css">
+
+  <script src="../lib/audioworklet-polyfill.js">
+    /*
+    https://unpkg.com/@free-side/audioworklet-polyfill/dist/audioworklet-polyfill.js
+    
+    如果出现sound库在https可以加载，http不能加载，就用这个解决
+    If the sound library can be loaded at https but cannot be loaded at http, use this solution
+    https://discourse.processing.org/t/p5-sound-on-google-chrome-p5-sound-js-3191-uncaught-in-promise-typeerror-cannot-read-property-addmodule-of-undefined/29939
+    https://github.com/processing/p5.js-sound/issues/454
+    https://github.com/processing/p5.js-sound/issues/409
+    */
+  </script>
+
+  <script src="../lib/p5.min.js"></script>
+  <script src="../lib/p5.sound.min.js"></script>
+  <!-- <script src="https://unpkg.com/p5.js-svg@1.1.1" type="text/javascript"></script> -->
+
+  <script>
+    enMdPath = './README.md',
+      cnMdPath = './README.md',
+      mdtempletsPath = './mdTemplets',
+      mdtempletsHrefPrefix = '';
+  </script>
+  <script src="./util/loadMarkdownFile_for_p5js_ctrler.js">
+  </script>
+
+
+
+</head>
+
+<body>
+  <script src="./util/util.js"></script>
+  <script src="./PC.js"></script>
+  <script src="./PC_addons.js"></script>
+
+  <p style="position: absolute;left:0;top:0;z-index:-1;">如果你看到这段话，估计是加载缓慢，或者有bug，尝试刷新，或者与我反馈 <br>If you see this
+    paragraph, it is estimated that the loading is slow, or there is a bug, try to refresh, or give me feedback</p>
+  <!-- <p id="readme" class="markdown-body" data-mdFile='./README_en.md'></p> -->
+
+
+  <!-- <script src="./PC.js"></script> -->
+  <!-- <script src="./sketch.js"></script> -->
+  <!-- <script src="./sketch_wip.js"></script> -->
+
+  <script id="examplesNames">
+
+    let script = document.createElement('script');
+    script.src = `./examples/Example.js`;
+    script.type = 'module';
+    document.getElementById('examplesNames').after(script);
+
+    examplesArr = ['balls', 'fx', 'fx_v2', 'index_bg'];
+    // examplesArr = ['fx'];
+
+    var url = new URL(document.location.href), _example = examplesArr[0];
+    if (url && url.searchParams.has('example')) {
+      _example = url.searchParams.get('example');
+    }
+    if (examplesArr.includes(_example)) {
+      let script = document.createElement('script');
+      script.src = `./examples/${_example}.js`;
+      script.type = 'module';
+      document.getElementById('examplesNames').after(script);
+    } else {
+      examplesArr.map(exampleName => {
+        let script = document.createElement('script');
+        script.src = `./examples/${exampleName}.js`;
+        script.type = 'module';
+        document.getElementById('examplesNames').after(script);
+      });
+    }
+
+
+  </script>
+  <!-- <script src="./examples/balls.js"></script>
+  <script src="./examples/fx.js"></script>
+  <script src="./examples/fx2.js"></script> -->
+  <script src="./examples/Example.js" type="module"></script>
+
+
+
+  <!-- <link rel="stylesheet" href="./lib/markdown.css"> -->
+  <link rel="stylesheet" href="../lib/markdown_yiu.css">
+
+  <!-- <script type="text/javascript" src="//cdn.jsdelivr.net/npm/marked/marked.min.js"></script> -->
+  <script type="text/javascript" src="../lib/marked.min.js"></script>
+
+  <!-- <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/atom-one-light.min.css"> -->
+  <link rel="stylesheet" href="../lib/atom-one-light.min.css">
+
+  <!-- <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.0/highlight.min.js"></script> -->
+  <script src="../lib/highlight.min.js"></script>
+
+  <script>
+    path_base = 'https://leizingyiu.github.io/p5js_Ctrler/index.html';
+
+    loadReadmeFile(() => {
+      relative_path_to_full_path(path_base);
+    });
+
+    document.querySelector('.markdown-body[id*=readme]').classList.add('hide');
+    setTimeout(() => {
+      document.querySelector('.markdown-body[id*=readme]').classList.remove('hide');
+    }, 500);
+
+  </script>
+
+</body>
+
+</html>

@@ -4,30 +4,27 @@ const language = ["zh-CN", "zh-HK", "zh-MO", "zh-TW", "zh-SG"].indexOf(navigator
 const pageTitle = 'make FFT look like AE -- by leizingyiu';
 
 document.title = pageTitle;
-
-musics = [{
-  'song': './music/高级动物.mp3',
-  'lrc': './music/高级动物.lrc'
-},
-{
-  'song': './music/Breaking The Habit.m4a',
-  'lrc': './music/Breaking The Habit.lrc'
-},
-{
-  'song': './music/Faint.m4a',
-  'lrc': './music/Faint.lrc'
-},
-{
-  'song': './music/国际歌 (伴唱 现代人乐队 合唱 总政歌舞团) 马备 《红色摇滚》.m4a',
-  'lrc': './music/国际歌 (伴唱 现代人乐队 合唱 总政歌舞团) 马备 《红色摇滚》.ini'
-},
-];
+m = {
+  "Heifervescent_-_Cellophane_Mask": {
+    "lrc": "../music/Heifervescent_-_Cellophane_Mask.lrc",
+    "song": "../music/Heifervescent_-_Cellophane_Mask.mp3"
+  },
+  "Rude_-_Cold_Inside": {
+    "lrc": "../music/Rude_-_Cold_Inside.lrc",
+    "song": "../music/Rude_-_Cold_Inside.mp3"
+  },
+  "Tantalizing_Youth_-_Social_Square": {
+    "lrc": "../music/Tantalizing_Youth_-_Social_Square.lrc",
+    "song": "../music/Tantalizing_Youth_-_Social_Square.mp3"
+  },
+  "Tom_Orlando_-_Ghost_Ride_[Radio_Edit]": {
+    "lrc": "../music/Tom_Orlando_-_Ghost_Ride_[Radio_Edit].lrc",
+    "song": "../music/Tom_Orlando_-_Ghost_Ride_[Radio_Edit].mp3"
+  }
+};
+musics = Object.values(m);
 music = musics[Math.floor(musics.length * Math.random())];
 
-// // music = { song: 'music/Damscray_DancingTiger.mp3' };
-// music = {
-//   song: './music/Faint.m4a'
-// };
 
 au = document.getElementById('player');
 // au = document.createElement('audio');    au.controls = 'true';  au.preload = 'true';  au.loop = 'true'; document.body.appendChild(au);
@@ -171,19 +168,31 @@ function setup() {
 
   fft = new p5.FFT();
   amplitude = new p5.Amplitude();
+  hz = new Hz({ fft: fft });
+  console.log(hz.hzArr);
   // amplitude.setInput(au);
   // fft.setInput(au);
+
 
   let context = getAudioContext();
   // wire all media elements up to our FFT
   for (let elem of selectAll('audio').concat(selectAll('video'))) {
     let mediaSource = context.createMediaElementSource(elem.elt);
     mediaSource.connect(p5.soundOut);
+    mediaSource.connect(context.destination);
   }
+
+
+
+
+
+
+
 
   // p5js_ctrler settings 
   {
     pc = new PC({
+      updateWithCookieBoo: true,
       autoHideBoo: false,
       ctrlerWidth: 400,
       fontsize: 10,
@@ -207,8 +216,20 @@ function setup() {
     };
 
     pc.radio('drawFunc', ['drawEnergy', 'drawSpectrum'], drawFuncUpdate);
+    pc.a('spectrum_link', 'https://openprocessing.org/sketch/415932', 'go to openprocessing')
+      .alt({
+        'cn': '-- drawSpectrum绘制函数的来源考',
+        'en': '-- The source of the drawSpectrum drawing function'
+      }[language])
+      .displayName('source:');
+    pc.a('ae_link', 'https://helpx.adobe.com/cn/after-effects/using/generate-effects.html#audio_spectrum_effect', 'go to adobe.com')
+      .alt({
+        'cn': '-- AE中的音频频谱的帮助文档，drawEnergy 以此作为参考',
+        'en': '-- The help document of the audio spectrum in AE, drawEnergy uses this as a reference'
+      }[language])
+      .displayName('ref:');
 
-
+    pc.hr('.', '1px');
     pc.slider("fft_bins", 10, 4, 14, 1);
 
     pc.color("fill_color", "#369");
@@ -217,11 +238,15 @@ function setup() {
     pc.color("background_color", '#ddd');
     pc.slider('afterimage_alpha', 0.8, 0.001, 1, 0.001);
 
-    let hzUpdate = () => { try { updateHzArr(); } catch (err) { console.log(err) } };
+    let hzUpdate = () => { return; try { updateHzArr(); } catch (err) { console.log(err) } };
     pc.slider("hzNum", 64, 16, 1024, 1, hzUpdate);
     pc.slider("hzPowBase", 1.03, 1.001, 1.1, 0.001, hzUpdate);
-    pc.slider("hzDistributePowBase", 0.5, 0.001, 1, 0.001, hzUpdate);
-    pc.radio("hzDistributeFuncName", ['_linear', '_pow'], (e) => {
+    pc.slider("hzDistributePowBase", 0.5, 0.001, 1, 0.001, () => {
+      hz.distributePowBase = hzDistributePowBase;
+
+      hzUpdate()
+    });
+    pc.radio("hzDistributeFuncName", ['linear', 'pow'], (e) => {
       let v = e.target.value;
       switch (v) {
         case 'linear':
@@ -231,9 +256,41 @@ function setup() {
           pc.enable('hzDistributePowBase');
           break;
       }
+      hz.distributeFuncName = hzDistributeFuncName;
 
       hzUpdate();
     });
+
+
+    pc.a('volume_link',
+      'https://baike.baidu.com/item/%E5%90%AC%E8%A7%89%E5%93%8D%E5%BA%94%E8%8C%83%E5%9B%B4/5676882#人耳的听觉特性',
+      'view in baidu')
+      .alt({
+        'cn': '-- 查看响度呈现指数特征的参考',
+        'en': '-- View reference for Loudness Rendering Index characteristics'
+      }[language])
+      .displayName('ref:');
+    pc.a('Distribution_link',
+      '../fxVisualizer/index_2.html?draw_on_top=func&p5js_ctrler_type=slider&coordinate=fx_area&fx=m+%3D+0.5%2C+p+%3D+_p%3B%0Ao+%3D+x%3B%0Aa+%3D+m+-+Math.abs%28x+-+m%29%3B%0Ab+%3D+Math.sin%28a+*+Math.PI%29%2F2%3B%0Ac+%3D+Math.pow%28b+*+2%2C+_p%29+%2F+2%3B%0Ad+%3D+x+%3C+m+%3F+c+%3A+1+-+c%3B&upper_limit=1&lower_limit=0&variable_name=_p&new_ctrler=pc.slider%28%27_p%27%2C+0.8%2C0%2C1%2C0.001%29&p5js_Ctrler_parameter=1.1%2C1%2C1.5%2C0.001&_p=0.884&x_scale=x_precision&precision=128',
+      'view in my fxVisualizer')
+      .alt({
+        'cn': '-- 查看从数据平均分布的线性映射，到保留更多中部数据幂函数映射的变换过程',
+        'en': '-- See the transformation process from a linear mapping that the data is evenly distributed, to a power function mapping that preserves more central data'
+      }[language])
+      .displayName('ref:');
+    pc.a('Distribution_link2',
+      '../fxVisualizer/index_2.html?draw_on_top=func&p5js_ctrler_type=slider&coordinate=fx_area&variable_name=m&new_ctrler=pc.slider%28%27num%27%2C+16%2C+1%2C+32+%2C+1%29+%3B+pc.slider%28%27m%27%2C+0.5%2C0.001%2C1%2C0.001%29&p5js_Ctrler_parameter=11%2C9%2C12%2C1&fx=steps%3Dnum%3B%0Aa%3Dx*steps%3B%0Ab%3DMath.pow%28a%2Fsteps%2Cm%29*%28Math.pow%281%2Cm%29*steps%29%3B%0Ac%3DMath.floor%28b*steps%29%2Fsteps&precision=79&num=3&m=0.433&lower_limit=-0.5&upper_limit=1',
+      'view in my fxVisualizer')
+      .alt({
+        'cn': '-- 直观感受根据音色频率变化的取样区间，音频频率越高，感受越不明显，可以取更宽的区间进行展示',
+        'en': '-- Intuitively feel the sampling interval that changes according to the tone frequency. The higher the audio frequency, the less obvious the feeling. You can take a wider interval for display.'
+      }[language])
+      .displayName('ref:');
+
+
+    setTimeout(() => {
+      pc.displayName(pcDisplayDict);
+    }, 100);
 
     pc.update('drawFunc', 'drawEnergy');
     pc.update("hzDistributeFuncName", 'pow');
@@ -242,11 +299,8 @@ function setup() {
 
     pc.update('hzDistributeFuncName', '_pow');
 
-    setTimeout(() => {
-      pc.displayName(pcDisplayDict);
-    }, 100);
-
     pc.load(pcPreset);
+
   }
 }
 
@@ -438,21 +492,21 @@ function mouseClicked(e) {
   // if (e.target == cnv.elt) { auSwitch(au); }
 }
 
-function MakeFrequencyBands(sampleCount, samples) {
-  let count = 0;
-  let freqBand = [];
-  for (let i = 0; i < sampleCount.length; i++) {
-    let average = 0;
-    for (let j = 0; j < sampleCount[i]; j++) {
-      average += samples[count] * count;
-      count++;
-    }
-    average = average / count;
-    freqBand[i] = average / 100;
-  }
-  freqBand = freqBand.filter(i => !isNaN(i));
-  return freqBand;
-}
+// function MakeFrequencyBands(sampleCount, samples) {
+//   let count = 0;
+//   let freqBand = [];
+//   for (let i = 0; i < sampleCount.length; i++) {
+//     let average = 0;
+//     for (let j = 0; j < sampleCount[i]; j++) {
+//       average += samples[count] * count;
+//       count++;
+//     }
+//     average = average / count;
+//     freqBand[i] = average / 100;
+//   }
+//   freqBand = freqBand.filter(i => !isNaN(i));
+//   return freqBand;
+// }
 
 // sort and draw energy
 
@@ -515,7 +569,7 @@ function MakeFrequencyBands(sampleCount, samples) {
 //    * [507.97, 806.35],
 //    * [806.35, 1280],
 //    * [1280, 2031.87],
-//    * [2031.87, 3225.4],                                        
+//    * [2031.87, 3225.4],
 //    * [3225.4, 5120],
 //    * [5120, 8127.49],
 //    * [8127.49, 12901.59],
@@ -547,6 +601,8 @@ function MakeFrequencyBands(sampleCount, samples) {
 //     return result;
 //   }
 // }
+
+
 
 function updateHz_iFn(i, dx, ar) {
   return dx / (ar.length - 1);
@@ -601,9 +657,10 @@ function getEachEnergy(hzNum, hzHeightPowBase) {
 
 drawFuncs.drawEnergy = () => {
   push();
-  fft.analyze(1024);
 
-  let energy = getEachEnergy(hzNum, hzPowBase);
+  // let energy = hz.getEachEnergy(hzNum, hzPowBase);
+  let energy = hz.getEachEnergy(hzNum, hzPowBase);
+  // console.log(energy, hz.hzNum);
   fill(fill_color);
   stroke(stroke_color);
   for (let i = 0; i < energy.length; i = i + 1) {
@@ -615,7 +672,25 @@ drawFuncs.drawEnergy = () => {
   }
 
   pop();
-}
+};
+
+// drawEnergy = () => {
+//   push();
+//   fft.analyze(1024);
+
+//   let energy = getEachEnergy(hzNum, hzPowBase);
+//   fill(fill_color);
+//   stroke(stroke_color);
+//   for (let i = 0; i < energy.length; i = i + 1) {
+//     let x = map(i, 0, energy.length, 0, width);
+//     let y = map(energy[i], 0, 255, height, 0);
+//     let hauteur = height - y;
+//     let largeur = width / energy.length;
+//     rect(x, y, largeur, hauteur);
+//   }
+
+//   pop();
+// }
 
 
 

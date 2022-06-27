@@ -1,0 +1,390 @@
+{
+    "default": {
+        "link": "./default/index.html",
+        "links": [
+            "./default/index.html",
+            "./p5js_Layout/index.html",
+            "./matterPoster/index.html"
+        ]
+    },
+    "previews": {
+        "RECT": {
+            "title": "R E C T",
+            "describe": "Music Visualization<br>A competition winning work, unofficial code implementation<br>source: https://www.jmgo.com/dist/#/activity/music",
+            "pagePath": "./RECT/index.html",
+            "outlink": "https://openprocessing.org/sketch/1463023",
+            "previewImg": "./RECT/RECT.png",
+            "previewVideo": "./RECT/RECT.mp4",
+            "operateDescribe": {
+                "cn": "打开右上角控制面板, 更改参数或者加载音乐",
+                "en": "Open the control panel in the upper right corner, change parameters or load music"
+            },
+            "operateDescribePos": [
+                "top",
+                "right"
+            ],
+            "__operateDescribePosAttrs__": [
+                [
+                    "top:0%",
+                    "bottom:0%"
+                ],
+                [
+                    "left:0%",
+                    "right:0%"
+                ]
+            ],
+            "frameTitle": false,
+            "frameDescribe": false,
+            "frameLink": true
+        },
+        "CANYON": {
+            "title": "CANYON",
+            "describe": "Music Visualization",
+            "pagePath": "./CANYON/index.html",
+            "outlink": "https://openprocessing.org/sketch/1457617",
+            "previewImg": "./CANYON/CANYON.PNG",
+            "previewVideo": "./CANYON/CANYON.webm",
+            "operateDescribe": {
+                "cn": "点击播放或暂停, 按f全屏",
+                "en": "Click to play or pause, press f for full screen"
+            },
+            "operateDescribePos": [
+                "top",
+                "right"
+            ],
+            "__operateDescribePosAttrs__": [
+                [
+                    "top:0%",
+                    "bottom:0%"
+                ],
+                [
+                    "left:0%",
+                    "right:0%"
+                ]
+            ],
+            "frameTitle": false,
+            "frameDescribe": true,
+            "frameLink": true
+        },
+        "p5js_Ctrler": {
+            "title": "p5js_Ctrler",
+            "describe": "Intuitively manipulate variables in p5js",
+            "pagePath": "./p5js_Ctrler/index_for_archive.html",
+            "outlink": "https://openprocessing.org/sketch/1537105",
+            "previewImg": "./p5js_Ctrler/p5js_Ctrler.png",
+            "previewVideo": "./p5js_Ctrler/p5js_Ctrler.mp4",
+            "operateDescribe": {
+                "cn": "请查看 <a href='https://leizingyiu.github.io/oPC/index.html'>https://leizingyiu.github.io/oPC/index.html</a>",
+                "en": "pls visit <a href='https://leizingyiu.github.io/oPC/index.html'>https://leizingyiu.github.io/oPC/index.html</a>"
+            },
+            "operateDescribePos": [
+                "top",
+                "right:0px"
+            ],
+            "__operateDescribePosAttrs__": [
+                [
+                    "top:0%",
+                    "bottom:0%"
+                ],
+                [
+                    "left:0%",
+                    "right:0%"
+                ]
+            ],
+            "frameTitle": false,
+            "frameDescribe": true,
+            "frameLink": true
+        },
+        "p5js_Grid": {
+            "title": "p5js_Grid",
+            "describe": "a tool to generate a grid.\nGet cell position and size with variable.grid[row][col] ",
+            "pagePath": "./p5js_Grid/index.html",
+            "outlink": "https://github.com/leizingyiu/p5js_Grid",
+            "previewImg": "./p5js_Grid/Grid.png",
+            "previewVideo": "./p5js_Grid/Grid.mp4",
+            "operateDescribe": {
+                "cn": "new Grid(left,top,width,height,row,col,margin,space)",
+                "en": "new Grid(left,top,width,height,row,col,margin,space)"
+            },
+            "operateDescribePos": [
+                "top",
+                "right:0px"
+            ],
+            "__operateDescribePosAttrs__": [
+                [
+                    "top:0%",
+                    "bottom:0%"
+                ],
+                [
+                    "left:0%",
+                    "right:0%"
+                ]
+            ],
+            "frameTitle": false,
+            "frameDescribe": true,
+            "frameLink": true
+        },
+        "PerspectiveGrid": {
+            "title": "PerspectiveGrid",
+            "describe": "Generate perspective grid,<br> can export and save as svg file",
+            "pagePath": "./PerspectiveGrid/index.html",
+            "outlink": "https://openprocessing.org/sketch/1448576",
+            "previewImg": "./PerspectiveGrid/PerspectiveGrid.gif",
+            "previewVideo": "./PerspectiveGrid/PerspectiveGrid.mp4",
+            "operateDescribe": {
+                "cn": "滚动鼠标改变透视深度, <br>或者打开右上角控制面板, <br>更改参数并保存svg",
+                "en": "Scroll the mouse to change the perspective depth, <br>or open the control panel in the upper right corner, <br>change the parameters and save the svg"
+            },
+            "operateDescribePos": [
+                "top",
+                "right:270px"
+            ],
+            "__operateDescribePosAttrs__": [
+                [
+                    "top:0%",
+                    "bottom:0%"
+                ],
+                [
+                    "left:0%",
+                    "right:0%"
+                ]
+            ],
+            "frameTitle": true,
+            "frameDescribe": true,
+            "frameLink": true
+        },
+        "Layout": {
+            "title": "Layout",
+            "describe": "A tool to put text into an area",
+            "pagePath": "./p5js_Layout/index.html",
+            "outlink": "https://github.com/leizingyiu/p5js_Layout",
+            "previewImg": "./p5js_Layout/Layout.gif",
+            "previewVideo": "./p5js_Layout/Layout.mp4",
+            "operateDescribe": {
+                "cn": "请浏览github中的readme",
+                "en": "Please browse the readme in github"
+            },
+            "operateDescribePos": [
+                "top",
+                "right"
+            ],
+            "__operateDescribePosAttrs__": [
+                [
+                    "top:0%",
+                    "bottom:0%"
+                ],
+                [
+                    "left:0%",
+                    "right:0%"
+                ]
+            ],
+            "frameTitle": false,
+            "frameDescribe": true,
+            "frameLink": true
+        },
+        "fxVisualizer": {
+            "title": "fxVisualizer",
+            "describe": "A visualization tool for unary functions, showing how the function changes between 0 and 1. <br>It is convenient to intuitively obtain the required quantity transformation when writing a loop statement",
+            "pagePath": "./fxVisualizer/index_2.html?load_demo=true",
+            "outlink": "https://openprocessing.org/sketch/1595177",
+            "previewImg": "./fxVisualizer/fxVisualizer.gif",
+            "previewVideo": "./fxVisualizer/fxVisualizer.mp4",
+            "operateDescribe": {
+                "cn": "在fx文本框中，输入函数表达式，数学函数参考Math文档，可引用前面的得数结果，如 y=2*x; z=Math.sin(y);",
+                "en": "In the fx text box, enter the function expression. For mathematical functions, refer to the Math documentation. You can refer to the previous result, such as y=2*x; z=Math.sin(y);"
+            },
+            "operateDescribePos": [
+                "top",
+                "right"
+            ],
+            "__operateDescribePosAttrs__": [
+                [
+                    "top:0%",
+                    "bottom:0%"
+                ],
+                [
+                    "left:0%",
+                    "right:0%"
+                ]
+            ],
+            "frameTitle": false,
+            "frameDescribe": true,
+            "frameLink": true
+        },
+        "turn_fft_into_AE": {
+            "title": "turn_fft_into_AE",
+            "describe": "Brings the audio spectrum closer to common timbre partitions,\nand exponential distribution of loudness",
+            "pagePath": "./turn_fft_into_AE/index.html",
+            "outlink": "https://openprocessing.org/sketch/1595849",
+            "previewImg": "./turn_fft_into_AE/turn_fft_into_AE.gif",
+            "previewVideo": "./turn_fft_into_AE/turn_fft_into_AE.mp4",
+            "operateDescribe": {
+                "cn": "更改左上角设置数据，并阅读其中的参考",
+                "en": "Change the top left setting data and read the reference there"
+            },
+            "operateDescribePos": [
+                "top",
+                "right"
+            ],
+            "__operateDescribePosAttrs__": [
+                [
+                    "top:0%",
+                    "bottom:0%"
+                ],
+                [
+                    "left:0%",
+                    "right:0%"
+                ]
+            ],
+            "frameTitle": false,
+            "frameDescribe": true,
+            "frameLink": true
+        },
+        "LRC_Reader": {
+            "title": "LRC_Reader",
+            "describe": "LRC_Reader Tool and Music Visualization demo",
+            "pagePath": "./LRC_Reader/index.html",
+            "outlink": "https://github.com/leizingyiu/LRC_Reader",
+            "previewImg": "./LRC_Reader/LRC.jpg",
+            "previewVideo": "./LRC_Reader/LRC.mp4",
+            "operateDescribe": {
+                "cn": "请在控制器中，加载歌曲以及歌词，体验demo在其他歌曲中的表现；LRC.js的使用，可参考左侧说明文本，或浏览github中的repository",
+                "en": "Please load the song and lyrics in the controller to experience the performance of the demo in other songs; for the use of LRC.js, please refer to the description text on the left, or browse the repository in github"
+            },
+            "operateDescribePos": [
+                "top",
+                "right"
+            ],
+            "__operateDescribePosAttrs__": [
+                [
+                    "top:0%",
+                    "bottom:0%"
+                ],
+                [
+                    "left:0%",
+                    "right:0%"
+                ]
+            ],
+            "frameTitle": false,
+            "frameDescribe": true,
+            "frameLink": true
+        },
+        "matterPoster": {
+            "title": "matterPoster",
+            "describe": "a demo for studying matterjs, and made a typo with Grid.js and Layout.js .",
+            "pagePath": "./matterPoster/index.html",
+            "outlink": "https://openprocessing.org/sketch/1494420",
+            "previewImg": "./matterPoster/matterPoster.gif",
+            "previewVideo": "./matterPoster/matterPoster.mp4",
+            "operateDescribe": {
+                "cn": "使用电脑打开，可用鼠标拖拽字母甩动； 使用移动设备打开，可倾斜设备使重力发生变化",
+                "en": "Use the computer to open, drag and drop the letters with the mouse. Open with mobile device, tilt the device to change gravity"
+            },
+            "operateDescribePos": [
+                "top",
+                "right"
+            ],
+            "__operateDescribePosAttrs__": [
+                [
+                    "top:0%",
+                    "bottom:0%"
+                ],
+                [
+                    "left:0%",
+                    "right:0%"
+                ]
+            ],
+            "frameTitle": false,
+            "frameDescribe": true,
+            "frameLink": true
+        },
+        "keyboardCtrl": {
+            "title": "keyboardCtrl",
+            "describe": "Predefine different interactions of the keyboard, such as press to trigger, press again to stop, or press again to reverse, etc.",
+            "pagePath": "./keyboardCtrl/index.html",
+            "outlink": "https://openprocessing.org/sketch/1592939",
+            "previewImg": "./keyboardCtrl/keyboardCtrl.png",
+            "previewVideo": "./keyboardCtrl/keyboardCtrl.mp4",
+            "operateDescribe": {
+                "cn": "请查看demo右侧说明内容",
+                "en": "Please see the description on the right side of the demo"
+            },
+            "operateDescribePos": [
+                "top",
+                "right:0px"
+            ],
+            "__operateDescribePosAttrs__": [
+                [
+                    "top:0%",
+                    "bottom:0%"
+                ],
+                [
+                    "left:0%",
+                    "right:0%"
+                ]
+            ],
+            "frameTitle": false,
+            "frameDescribe": true,
+            "frameLink": true
+        },
+        "SphericalCoordinate": {
+            "title": "SphericalCoordinate",
+            "describe": "Map the coordinate points on the screen to the sphere mathematically without WEBGL",
+            "pagePath": "./SphericalCoordinate/index.html",
+            "outlink": "https://openprocessing.org/sketch/1430518",
+            "previewImg": "./SphericalCoordinate/SphericalCoordinate.gif",
+            "previewVideo": "./SphericalCoordinate/SphericalCoordinate.webm",
+            "operateDescribe": {
+                "cn": "鼠标点击可控制方块位置, <br>按f全屏",
+                "en": "Click the mouse to control the position of the block, <br>press f to full screen"
+            },
+            "operateDescribePos": [
+                "top",
+                "right"
+            ],
+            "__operateDescribePosAttrs__": [
+                [
+                    "top:0%",
+                    "bottom:0%"
+                ],
+                [
+                    "left:0%",
+                    "right:0%"
+                ]
+            ],
+            "frameTitle": true,
+            "frameDescribe": true,
+            "frameLink": true
+        },
+        "cubeGrid": {
+            "title": "Cube Grid",
+            "describe": "Generate squares and points in space,<br>which can be saved as png files with transparent background",
+            "pagePath": "./cubeGrid/index.html",
+            "outlink": "https://openprocessing.org/sketch/1449215",
+            "previewImg": "./cubeGrid/cubeGrid.jpg",
+            "previewVideo": "./cubeGrid/cubeGrid.mp4",
+            "operateDescribe": {
+                "cn": "鼠标点击或拖拽, <br>可控制旋转和大小, <br>按f全屏",
+                "en": "Mouse click or drag to control rotation and size, <br>press f for full screen"
+            },
+            "operateDescribePos": [
+                "top",
+                "right"
+            ],
+            "__operateDescribePosAttrs__": [
+                [
+                    "top:0%",
+                    "bottom:0%"
+                ],
+                [
+                    "left:0%",
+                    "right:0%"
+                ]
+            ],
+            "frameTitle": true,
+            "frameDescribe": true,
+            "frameLink": true
+        }
+    },
+    "backup": {}
+}

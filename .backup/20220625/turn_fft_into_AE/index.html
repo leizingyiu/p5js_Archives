@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>make FFT look like AE -- by leizingyiu</title>
+  <link rel="stylesheet" type="text/css" href="style.css">
+
+  <script src="../lib/audioworklet-polyfill.js"></script>
+  <script src="../lib/p5.min.js"></script>
+  <script src="../lib/p5.sound.js"></script>
+
+  <style>
+    audio {
+      opacity: 0.2;
+      transition: opacity 0.5s ease;
+    }
+
+    audio:hover {
+      opacity: 1;
+    }
+  </style>
+</head>
+
+<body>
+  <audio id="player" controls="'true" preload="true"></audio>
+
+  <script src="../p5js_Ctrler/PC_wip.js"></script>
+  <script src="./Hz.js"></script>
+
+  <script src="sketch_2.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,576 @@
+:root {
+    --grid-color1: white;
+    --grid-color2: lightGrey;
+    --grid-size: 20px;
+    --grid-offset-size: 10px;
+    --bg-gradient: linear-gradient(to right bottom, hsla(0deg, 100%, 100%, 0.72) 0%, hsla(0deg, 100%, 100%, 0.48)100%);
+    --scrollbar-width: 3px;
+
+    --flex-item-margin: 10px;
+
+    font-size: 1.44vmin;
+    font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+.grid {
+    background-color: var(--grid-color1);
+    background-image:
+        linear-gradient(45deg, var(--grid-color2) 25%, transparent 25%,
+            transparent 75%, var(--grid-color2) 75%, var(--grid-color2)),
+        linear-gradient(45deg, var(--grid-color2) 25%, transparent 25%,
+            transparent 75%, var(--grid-color2) 75%, var(--grid-color2));
+    background-size: var(--grid-size) var(--grid-size);
+    background-position: 0 0, var(--grid-offset-size) var(--grid-offset-size);
+
+}
+
+* {
+    padding: 0;
+    margin: 0;
+}
+
+html {
+    background: hsla(0, 0%, 0%, 0.8);
+    scroll-snap-type: y mandatory;
+    transition: opacity 1s ease;
+}
+
+html.loading::before {
+
+    content: "Page Loading, Pls Wait";
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: var(--bg-gradient);
+    opacity: 1;
+    transform: scale(100%, 100%);
+
+    transition: opacity 1s ease, transform 1s ease;
+    font-size: 2em;
+    font-style: oblique;
+    letter-spacing: 0.2em;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    z-index: 99999;
+    user-select: none;
+    scroll-behavior: auto;
+    pointer-events: none;
+}
+
+html::before {
+    opacity: 0;
+    transform: scale(100%, 0);
+    transform-origin: 50% 0%;
+}
+
+body {
+    transition: transform 1s ease;
+}
+
+#flex_main {
+    min-height: 100vh;
+    margin: var(--flex-item-margin) 0;
+    /* scroll-snap-type: y mandatory; */
+}
+
+#flex_main,
+#flex_main * {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-grow: 1;
+    flex-shrink: 1;
+}
+
+#flex_main li {
+    min-height: 36vmin;
+    position: relative;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+#flex_main li.item {
+    max-height: 92vh;
+    /* border-top: 1px; border-bottom: 2px; border-left: 0; border-right: 0; border-style: inset; */
+    opacity: 1;
+    transition: opacity 0.36s ease, border 0.22s ease, transform 0.48s ease;
+}
+
+#flex_main:hover li.item {
+    opacity: 0.64;
+}
+
+#flex_main:hover li.item:hover {
+    opacity: 1;
+}
+
+#flex_main li.item:hover {
+    /* border-top: 2px; border-bottom: 4px; border-left: 0; border-right: 0; border-style: inset; */
+}
+
+#flex_main li.item::after,
+#flex_main li.item::before {
+    content: " ";
+    display: block;
+    height: 0px;
+    width: 100%;
+    position: absolute;
+    left: 0;
+    border-color: inherit;
+    border-width: 1px;
+    z-index: 999;
+    border-style: solid;
+    box-sizing: border-box;
+    transition: border 0.22s ease, transform 0.48s ease;
+
+}
+
+#flex_main li.item::before {
+    top: 0;
+    transform: scale(100%, 100%);
+    transform-origin: center top;
+}
+
+#flex_main li.item::after {
+    bottom: 0;
+    transform: scale(100%, 200%);
+    transform-origin: center bottom;
+}
+
+#flex_main li.item:hover:before {
+    transform: scale(100%, 200%);
+}
+
+#flex_main li.item:hover:after {
+    transform: scale(100%, 400%);
+}
+
+#flex_main[data-flex-type="col"]>li,
+#flex_main [data-flex-type="col"]>li {
+    margin-top: var(--flex-item-margin);
+}
+
+#flex_main[data-flex-type="row"]>li,
+#flex_main [data-flex-type="row"]>li {
+    margin-left: var(--flex-item-margin);
+}
+
+#flex_main li:first-child {
+    margin-top: 0;
+    margin-left: 0;
+}
+
+
+
+iframe {
+    border: 0;
+    width: 100%;
+    height: 100%;
+}
+
+#flex_main .item {
+    display: block !important;
+}
+
+#flex_main .item h2,
+#frameLayout h2 {
+    display: inline-block !important;
+    /* background: hsla(0deg, 100%, 100%, 0.64); */
+    background: var(--bg-gradient);
+    position: relative;
+    top: 1rem;
+    left: 1rem;
+    padding: 1rem;
+    max-width: calc(100% - 4rem);
+    letter-spacing: 0.1em;
+    font-size: max(min(2.5rem, 24px), 16px);
+    font-style: oblique;
+    z-index: 1;
+    user-select: none;
+}
+
+#flex_main .item h2 *,
+#frameLayout h2 * {
+    display: inline-block !important;
+}
+
+#flex_main .item h2>span,
+#frameLayout h2>span {
+    display: block !important;
+    font-size: 0.64em;
+    font-weight: 400;
+    line-height: max(1.5em, 10px);
+    letter-spacing: 0.05em;
+    margin-top: 0.5em;
+    font-style: normal;
+    user-select: none;
+}
+
+#frame #frameLink p.links{
+    width:fit-content;
+/* height: auto; */display: flex;align-content: center;flex-wrap: wrap;}
+#flex_main p.links {
+    position: absolute;
+    bottom: 0;
+    flex-direction: row;
+    padding: 1em;
+    flex-wrap: wrap;
+text-align: left;}
+#flex_main p.links i.spaceBetween{
+    display:inline-block;
+    width: 0;
+    opacity:0;
+margin: 0.5em;}
+
+#frame #frameLayout #frameClose a,
+#flex_main .item a.link,
+#frameLayout a.link {
+    display: block;
+    /* position: absolute; */
+    /* left: 1rem; */
+    /* bottom: 1rem; */
+    margin: calc( 1rem + 1em /2 ) 1rem;
+    /* transform: translate(-50%, -50%); */
+    color: hsla(0, 100%, 100%, 0.8);
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    user-select: none;
+float: left;display: inline-block;/* margin-right: 2em; *//* margin-bottom: 2em; */width: fit-content;flex-grow: 0;}
+
+
+#frame #frameLayout #frameClose a::before,
+#flex_main .item a.link::before,
+#frameLayout a.link::before {
+    content: ' ';
+    width: 100%;
+    height: 100%;
+    box-sizing: content-box;
+    padding: 1rem;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    display: block;
+    /* background: hsla(0, 100%, 00%, 0.1); */
+    background: var(--bg-gradient);
+    z-index: -999;
+max-width: revert;}
+
+#flex_main .item a,
+#frameLayout a {
+    display: inline-block !important;
+    position: relative;
+    z-index: 999;
+    text-decoration: wavy underline;
+    text-decoration-thickness: 0.01em;
+    color: #fff;
+}
+
+
+#flex_main .item a::after,
+#frameLayout a::after {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: -1;
+    padding: 0.2em;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%) skew(-10deg, 00deg);
+    background-color: inherit;
+}
+
+
+
+#flex_main .item video {
+    z-index: 0;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    object-fit: cover;
+    user-select: none;
+    pointer-events: none;
+    display: block;
+    opacity: 0;
+    transition: opacity 0.64s ease;
+}
+
+#flex_main .item:hover video {
+    opacity: 1;
+}
+
+#frame {
+    position: relative;
+    max-height: 80vmin;
+    height: 100vh;
+    margin: var(--flex-item-margin) 0;
+}
+
+#frame iframe {
+    height: 100%;
+    width: 100%;
+    object-fit: fill;
+}
+
+#frame #frameLayout {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+#frame #frameLayout * {
+    transition: opacity 0.48s ease;
+}
+
+#frame #frameLayout.hide,
+#frame #frameLayout.hide *,
+#frame #frameLayout .hide {
+    pointer-events: none !important;
+    opacity: 0 !important;
+}
+
+#frame #frameLayout #frameTitle,
+#frame #frameLayout #frameLink,
+#frame #frameLayout #frameDescribe,
+#frame #frameLayout #frameClose {
+    position: absolute;
+    pointer-events: all;
+    transition: transform 0.48s ease;
+    overflow: hidden;
+}
+
+#frame #frameLayout #frameLink,
+#frame #frameLayout #frameClose {
+    bottom: 0;
+}
+
+
+#frame #frameLayout #frameTitle *,
+#frame #frameLayout #frameLink *,
+#frame #frameLayout #frameDescribe *,
+#frame #frameLayout #frameClose * {
+    transition: transform 0.48s ease, opacity 0.36s ease;
+}
+
+#frame #frameLayout #frameTitle {
+    top: 0;
+}
+
+#frame #frameLayout #frameTitle h2 {
+    position: relative;
+    float: left;
+    left: 0;
+    top: 0;
+    margin: 1rem;
+}
+
+#frame #frameLayout #frameDescribe {
+    /* position: ; */
+}
+
+#frame #frameLayout #frameDescribe p {
+    position: relative;
+    /* float: left;
+    left: 0; */
+    top: 0;
+    margin: 1rem;
+    padding: 1rem;
+    background: var(--bg-gradient);
+}
+
+#frame #frameLayout #frameLink {
+    left: 0;
+}
+
+#frame #frameLayout #frameLink a.link {
+    position: relative;
+    float: left;
+    left: 0;
+    bottom: 0;
+    margin: 2rem 1rem 2rem 2rem;
+}
+
+#frame #frameLayout #frameClose {
+    right: 0;
+}
+
+#frame #frameLayout #frameClose a {
+    position: relative;
+    float: left;
+    left: 0;
+    bottom: 0;
+    margin: 2rem;
+
+    /* color: #fff;
+    padding: 1rem;
+    background: var(--bg-gradient);
+    box-sizing: border-box;
+    z-index: 99; */
+}
+
+/* #frame #frameLayout #frameClose a::after {
+    content: ' ';
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) skew(-10deg, 00deg);
+    width: 64%;
+    height: 64%;
+    background-color: #000;
+    z-index: -1;
+} */
+
+#frame #frameLayout #frameDescribe {
+    /* left: 50%;
+    transform: translate(-50%, 0); */
+    font-size: 10px;
+    line-height: 1.5em;
+    hanging-punctuation: force-end;
+}
+
+#frame #frameLayout #frameDescribe p {
+    hanging-punctuation: force-end;
+}
+
+
+/* layout hide state */
+#frame:hover #frameLayout.focus #frameLink a.link,
+#frame:hover #frameLayout.focus #frameTitle h2,
+#frame:hover #frameLayout.focus #frameDescribe p,
+#frame:hover #frameLayout.focus #frameClose a {
+    opacity: 0.2;
+}
+
+/* layout show state */
+#frame #frameLayout.focus #frameLink a.link,
+#frame #frameLayout.focus #frameTitle h2,
+#frame #frameLayout.focus #frameDescribe p,
+#frame #frameLayout.focus #frameClose a,
+#frame:hover #frameLayout.focus #frameLink:hover a.link,
+#frame:hover #frameLayout.focus #frameTitle:hover h2,
+#frame:hover #frameLayout.focus #frameDescribe:hover p,
+#frame:hover #frameLayout.focus #frameClose:hover a {
+    opacity: 1;
+}
+
+/* left bottom link show and hide*/
+
+#frame:hover #frameLayout.focus #frameLink a.link {
+    transform: translate(0, 320%);
+}
+
+/* mouse on link area or out of frame */
+#frame #frameLayout.focus #frameLink a.link,
+#frame:hover #frameLayout.focus #frameLink:hover a.link {
+    transform: translate(0, 0%);
+}
+
+/* left top title */
+#frame:hover #frameLayout.focus #frameTitle h2 {
+    transform: translate(0, -100%);
+}
+
+#frame #frameLayout.focus #frameTitle h2,
+#frame:hover #frameLayout.focus #frameTitle:hover h2 {
+    transform: translate(0, 0%);
+}
+
+/* right bottom close */
+#frame:hover #frameLayout.focus #frameClose a {
+    transform: translate(0, 320%);
+}
+
+#frame #frameLayout.focus #frameClose a,
+#frame:hover #frameLayout.focus #frameClose:hover a {
+    transform: translate(0, 0%);
+}
+
+#frame:hover #frameLayout.focus #frameDescribe p {
+    transform: translate(0, -100%);
+}
+
+#frame #frameLayout.focus #frameDescribe p,
+#frame:hover #frameLayout.focus #frameDescribe:hover p {
+    transform: translate(0, 0%);
+}
+
+body.iframeFocus {
+    overflow: hidden;
+}
+
+@media screen and (min-width: 750px) {
+    body {
+        max-width: min(90vw, 166vmin);
+        margin: 0 auto;
+    }
+
+    #flex_main [data-flex-type="row"] {
+        display: flex;
+        flex-direction: row;
+    flex-wrap: wrap;}
+
+    #flex_main [data-flex-type="col"] {
+        display: flex;
+        flex-direction: column;
+    }
+
+
+}
+
+@media screen and (max-width: 750px) {
+
+    html:after {
+        content: "Better on PC/Mac";
+        position: fixed;
+        bottom: 0;
+        left: 50%;
+
+        transform: translate(-50%, 0) skew(-10deg, 0);
+        padding: 1em;
+        border-radius: 0.2em;
+        font-size: 3em;
+        letter-spacing: 0.1em;
+        white-space: nowrap;
+        background: inherit;
+        margin: 1em;
+        color: #fff;
+        opacity: 0.08;
+        z-index: 9999999;
+        transition: opacity 0.64s ease;
+        pointer-events: none;
+        user-select: none;
+    }
+
+    html:hover::after,
+    html:active::after,
+    html.touched::after {
+        /* font-size: 2rem; */
+        opacity: 1;
+    }
+
+    #frame {
+        max-height: 80vh;
+    }
+
+    #flex_main li.item {
+        min-height: 150vmin !important;
+
+        margin: var(--flex-item-margin) var(--flex-item-margin) 0;
+    }
+
+    #flex_main li.branches {
+        margin: 0;
+    }
+}

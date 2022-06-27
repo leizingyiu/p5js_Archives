@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>my diff tool _ using diff.js _ by leizingyiu</title>
+    <style>
+        body {
+            width: 80vw;
+            margin: 0 auto;
+        }
+
+        div {
+            margin-top: 2em;
+        }
+
+        #inputTextArea,
+        #fileInputter,
+        #display {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            position: relative;
+            margin-top: 2em;
+        }
+
+        #inputTextArea textarea,
+        #fileInputter input,
+        #display pre {
+            flex-basis: calc(50% - 2em);
+            /* flex-grow: 1; */
+            min-height: 20vh;
+        }
+
+
+        #inputTextArea::before,
+        #inputTextArea::after {
+            position: absolute;
+            bottom: 100%;
+            text-align: left;
+            margin-bottom: 0.5em;
+        }
+
+        #inputTextArea::before {
+            content: attr(leftTitle);
+            left: 0;
+            text-align: left;
+        }
+
+        #inputTextArea::after {
+            content: attr(rightTitle);
+            right: 0;
+            text-align: right;
+        }
+
+
+        #fileInputter input {
+            min-height: min-content;
+        }
+
+
+
+
+        pre {
+            white-space: pre-wrap;
+        }
+
+        #diffTypes::before,
+        #diffModes::before {
+            content: attr(id);
+            display: block;
+            font-size: 1.5em;
+            letter-spacing: 0.02em;
+        }
+
+        #diffTypes label,
+        #diffModes label {
+            margin-right: 2em;
+            display: inline-block;
+        }
+
+        #display pre {
+            flex-grow: 1;
+            width: auto;
+            opacity: 1;
+        }
+
+        #display pre.hide {
+            display: block;
+            width: 0;
+            opacity: 0;
+            flex-grow: 0;
+        }
+    </style>
+
+    <script src="./lib/highlight.min.js"></script>
+</head>
+
+<body>
+    <div id="inputTextArea">
+        <textarea id="leftTextArea">pls load file below</textarea>
+        <textarea id="rightTextArea">pls load file below</textarea>
+    </div>
+    <div id="fileInputter">
+        <input type="file" name="leftFile" id="leftFileInput">
+        <input type="file" name="rightFile" id="rightFileInput">
+    </div>
+
+    <div id="diffTypes">
+    </div>
+    <div id="diffModes">
+    </div>
+
+
+    <div id="display">
+        <pre class="display left">loading from URL_search, pls wait</pre>
+        <pre class="display right">loading from URL_search, pls wait</pre>
+    </div>
+
+
+    <!-- <script src="https://cdn.bootcdn.net/ajax/libs/jsdiff/5.0.0/diff.min.js"></script> -->
+    <script src="../lib/diff.min.js"></script>
+    <script>
+        // {//demo
+        //     let one = 'beep boop',
+        //         other = 'beep boob blah',
+        //         color = '';
+        //     let span = null;
+        //     var diff = Diff.diffChars(one, other),
+        //         display = document.getElementById('display'),
+        //         fragment = document.createDocumentFragment();
+
+        //     diff.forEach((part) => {
+        //         // green for additions, red for deletions
+        //         // grey for common parts
+        //         const color = part.added ? 'green' :
+        //             part.removed ? 'red' : 'grey';
+        //         span = document.createElement('span');
+        //         span.style.color = color;
+        //         span.appendChild(document
+        //             .createTextNode(part.value));
+        //         fragment.appendChild(span);
+        //     });
+        //     display.innerHTML = '';
+        //     display.appendChild(fragment);
+        //     /* demo script from https://github.com/kpdecker/jsdiff */
+        // }
+
+        function updateDiff(leftText, rightText,
+            diffType = 'diffWords',
+            diffMode = 'unified',
+            displayDom = document.getElementById('display')) {
+
+
+            let newfragment = document.createDocumentFragment();
+
+            console.trace();
+            console.log(diffType, diffMode);
+
+            let diff = Diff[diffType](leftText, rightText);
+
+            console.log(diff, leftText, rightText, diffType, diffMode, displayDom);
+
+            switch (diffMode) {
+                case 'split':
+                    ['left', 'right'].map(side => {
+
+                        diff.forEach((part) => {
+                            // green for additions, red for deletions
+                            // grey for common parts
+                            switch (true) { // true  // TODO 
+                                case side == 'left' && part.added:
+                                    break;
+                            }
+                            const color = part.added ? (side == 'left' ? 'green' : 'red') :
+                                part.removed ? (side != 'left' ? 'green' : 'red') : 'grey';
+
+                            span = document.createElement('span');
+                            span.style.color = color;
+                            span.appendChild(document
+                                .createTextNode(part.value));
+                            newfragment.appendChild(span);
+                        });
+                        displayDom.querySelector(`pre.${side}`).innerHTML = '';
+                        displayDom.querySelector(`pre.${side}`).classList.remove('hide');
+
+                        displayDom.querySelector(`pre.${side}`).appendChild(newfragment);
+
+                    });
+                    break;
+                case 'unified':
+                default:
+                    diff.forEach((part) => {
+                        // green for additions, red for deletions
+                        // grey for common parts
+                        const color = part.added ? 'green' :
+                            part.removed ? 'red' : 'grey';
+                        span = document.createElement('span');
+                        span.style.color = color;
+                        span.appendChild(document
+                            .createTextNode(part.value));
+                        newfragment.appendChild(span);
+                    });
+                    [...displayDom.querySelectorAll('pre')].map(pre => {
+                        pre.innerHTML = '';
+                        pre.classList.add('hide');
+                    })
+                    displayDom.querySelector('pre').classList.remove('hide');
+                    displayDom.querySelector('pre').appendChild(newfragment);
+            }
+        }
+
+
+
+        function bindRadioVal(selector, valName) {
+            Object.defineProperty(window, valName, {//bind diffType selector
+                get() {
+                    let result = [...document.querySelectorAll(selector)].filter(i => i.checked);
+                    if ((result).length != 0) {
+                        return [...document.querySelectorAll(selector)].filter(i => i.checked)[0].value;
+                    } else {
+                        document.querySelector(selector).checked = true;
+                        return document.querySelector(selector).value;
+                    }
+                },
+                set(v) {
+                    [...document.querySelectorAll(selector)].map(d => d.checked = false);
+                    document.querySelector(`${selector}[value="${v}"]`).checked = true;
+                }
+            });
+        }
+
+        function bindTextAreaVal(selector, valName) {
+            Object.defineProperty(window, valName, {
+                get() {
+                    return document.querySelector(selector).value;
+                },
+                set(v) {
+                    document.getElementById(selector).value = v;
+                }
+            });
+        }
+
+        const diffTypes = ["diffChars", "diffWords", "diffWordsWithSpace", "diffLines", "diffTrimmedLines", "diffSentences", "diffCss", "diffJson", "diffArrays"];
+
+        const diffModes = ["unified", "split"];
+
+        diffTypes.map(type => {
+            let label = document.createElement('label');
+            let input = document.createElement('input');
+            input.type = 'radio', input.name = 'diffType', input.value = type;
+            label.innerHTML = input.outerHTML + type;
+            document.getElementById('diffTypes').appendChild(label);
+        });
+
+        diffModes.map(type => {
+            let label = document.createElement('label');
+            let input = document.createElement('input');
+            input.type = 'radio', input.name = 'diffMode', input.value = type;
+            label.innerHTML = input.outerHTML + type;
+            document.getElementById('diffModes').appendChild(label);
+        });
+
+        bindRadioVal(`input[name="diffType"]`, 'diffType');
+        bindRadioVal(`input[name="diffMode"]`, 'diffMode');
+
+        bindTextAreaVal('#leftTextArea', 'leftText');
+        bindTextAreaVal('#rightTextArea', 'rightText');
+
+
+        ['#leftTextArea', '#rightTextArea', 'input[name="diffType"]', 'input[name="diffMode"]'].map(selector => {
+            [...document.querySelectorAll(selector)].map(d => d.addEventListener('input', () => {
+                updateDiff(leftText, rightText, diffType, diffMode, display);
+            }));
+        });
+
+
+
+    </script>
+
+
+
+    <script>
+        let url = new URL(document.location.href);
+        let varNameArray = ['leftText', 'rightText', 'diffType'];
+        varNameArray.map(v => {
+            if (url && url.searchParams.has(v)) {
+                window[v] = url.searchParams.get(v);
+            }
+        });
+
+        let fileVarDict = {
+            'leftFile': 'leftText',
+            'rightFile': 'rightText'
+        };
+        let hintTextDict = {
+            'leftText': 'leftTitle',
+            'rightText': 'rightTitle'
+        };
+
+        if (Object.keys(fileVarDict).some(k => url && url.searchParams.has(k))) {
+            display.innerHTML = 'loading, pls wait';
+        }
+
+        Object.keys(fileVarDict).map(k => {
+            if (url && url.searchParams.has(k)) {
+                display.innerHTML = 'loading, pls wait';
+                fetch(url.searchParams.get(k))
+                    .then(response => {
+                        return response.text()
+                    })
+                    .then(text => {
+                        window[fileVarDict[k]] = text;
+                        document.getElementById('inputTextArea').setAttribute(hintTextDict[fileVarDict[k]], url.searchParams.get(k));
+
+                    }).then(() => {
+                        updateDiff();
+                    })
+            }
+        });
+
+        ['leftFileInput', 'rightFileInput'].map(id => {
+            document.getElementById(id).addEventListener('input', function () {
+                console.log(this.files[0]);
+            })
+        })
+
+        updateDiff(leftText, rightText, diffType, diffMode, document.querySelector('#display'));
+    </script>
+
+    <!-- <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/atom-one-light.min.css"> -->
+    <link rel="stylesheet" href="./lib/atom-one-light.min.css">
+
+    <!-- <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.0/highlight.min.js"></script> -->
+
+
+    <script>
+      //  hljs.initHighlightingOnLoad();
+
+    </script>
+</body>
+
+</html>

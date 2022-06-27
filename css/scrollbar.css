@@ -1,0 +1,28 @@
+::-webkit-scrollbar {
+    width: var(--scrollbar-width);
+    height: 2px;
+    position: fixed;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.08);
+}
+
+*:hover::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.32);
+}
+
+::-webkit-scrollbar-track {
+    border-radius: 0;
+    background: rgba(0, 0, 0, 0);
+}
+
+* {
+    scrollbar-color: rgba(0, 0, 0, 0.02) rgba(0, 0, 0, 0);
+    scrollbar-width: var(--scrollbar-width);
+}
+
+*:hover {
+    scrollbar-color: rgba(0, 0, 0, 0.08) rgba(0, 0, 0, 0);
+    scrollbar-width: var(--scrollbar-width);
+}

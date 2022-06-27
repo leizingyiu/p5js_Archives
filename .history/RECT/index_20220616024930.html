@@ -1,0 +1,93 @@
+<html>
+<!-- 
+
+// By Leizingyiu
+// https://www.leizingyiu.net/?lang=en
+// https://twitter.com/leizingyiu
+
+// source : https://www.jmgo.com/dist/#/activity/music
+
+// This work is licensed under a Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License.
+// http://creativecommons.org/licenses/by-nc-nd/4.0/
+
+ -->
+
+<head>
+    <meta name="viewport"
+        content="width=device-width,height=device-height,initial-scale=1.0,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0" />
+    <link rel="stylesheet" href="./style.css">
+    <script>
+        document.querySelector('html').addEventListener('load', function bodyLoad() {
+            document.addEventListener('keydown', function keyboard(e) {
+                e = e || window.event;
+                if (e.keyCode == 9) {
+                    document.querySelector('canvas').focus();
+                }
+            })
+        })
+    </script>
+
+
+
+
+</head>
+
+<body>
+    <footer>
+        <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/"><img alt="知识共享许可协议"
+                style="border-width:0" src="https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png" /></a><span>本作品采用<a
+                rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/">知识共享署名-非商业性使用-禁止演绎 4.0
+                国际许可协议</a>进行许可。</span>
+    </footer>
+    <!-- <input id="musicFileInput" type="file" style="opacity:0;position:fixed;z-index:-999;top:0;left:0;" /> -->
+
+    <script>
+        if (navigator.language != 'zh-CN') {
+            document.getElementsByTagName('footer')[0].innerHTML = `
+            <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/">Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License</a>.
+            `;
+        }
+
+        // let input = document.createElement('input');
+        // let inputId = 'musicFileInput';
+        // // input = document.getElementById(inputId);
+        // input.id = inputId;
+        // input.type = 'file';
+        // input.style = "opacity:0;position:fixed;z-index:-999;top:0;left:0;";
+        // document.body.appendChild(input);
+    </script>
+
+
+
+
+    <script src="./audioworklet-polyfill.js"></script>
+    <script src="./p5.min.js"></script>
+    <script src="./p5.sound.min.js"></script>
+    <script src="./dat.gui.min.js"></script>
+
+    <!-- <script src="https://unpkg.com/@free-side/audioworklet-polyfill/dist/audioworklet-polyfill.js"
+        type="text/javascript"></script> -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.min.js"
+        integrity="sha512-N4kV7GkNv7QR7RX9YF/olywyIgIwNvfEe2nZtfyj73HdjCUkAfOBDbcuJ/cTaN04JKRnw1YG1wnUyNKMsNgg3g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/addons/p5.sound.min.js"
+        integrity="sha512-WzkwpdWEMAY/W8WvP9KS2/VI6zkgejR4/KTxTl4qHx0utqeyVE0JY+S1DlMuxDChC7x0oXtk/ESji6a0lP/Tdg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.7/dat.gui.min.js"
+        integrity="sha512-LF8ZB1iTwi4Qvkm4pekHG4a437Y9Af5ZuwbnW4GTbAWQeR2E4KW8WF+xH8b9psevV7wIlDMx1MH9YfPqgKhA/Q=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
+
+
+
+    <!-- <script src="https://www.openprocessing.org/sketch/1454055/files/Musics.js"></script> -->
+    <script src="../Musics/Musics.js"></script>
+
+    <script src="./util.js" type="text/javascript"></script>
+    <script src="./Cell.js" type="text/javascript"></script>
+    <script src="./Column.js" type="text/javascript"></script>
+    <script src="./Grid.js" type="text/javascript"></script>
+    <script src="./sketch1422751.js" type="text/javascript"></script>
+    <!-- <script src="./all.js"></script> -->
+</body>
+
+</html>

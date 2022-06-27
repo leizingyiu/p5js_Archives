@@ -1,0 +1,24 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #00000006;
+  font-family: "PingFang SC",miui,system-ui,-apple-system,BlinkMacSystemFont,Helvetica Neue,Helvetica,sans-serif;
+}
+
+canvas {
+  display: block;
+  z-index: -9;
+}
+#readme{
+  margin: 0;
+  max-height: 100vh;
+  max-width: 36vw;
+  padding: 1em;
+  overflow: scroll;
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: 0;
+  background-color: #ffffff99;
+}

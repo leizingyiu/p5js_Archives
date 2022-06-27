@@ -1,0 +1,10 @@
+*/.history/*
+*/*/.history/*
+*/*/*/.history/*
+.history/*
+.DS_Store
+*/.DS_Store
+*backup*
+*/.*/*
+*/.*/*/*
+.*/*

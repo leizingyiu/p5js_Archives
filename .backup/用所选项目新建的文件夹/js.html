@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>js file reader -- by leizingyiu</title>
+    <script src="./lib/highlight.min.js"></script>
+    <link rel="stylesheet" href="./lib/atom-one-light.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        pre {
+            margin: 0 auto;
+            white-space: normal;
+            max-width: 144vh;
+        }
+
+        code {
+            white-space: pre-wrap;
+            line-height: 1.5em;
+            padding: 0 !important;
+            word-break: break-all;
+        }
+
+        code,
+        code * {
+            max-width: 100%;
+            word-break: break-all;
+        }
+    </style>
+</head>
+
+<body>
+    <pre id="container" class='hljs language-javascript'></pre>
+    <script>
+
+        function insertConsoleResult(script) {
+            let result = script.replace(/['"]/g, '`').replace(/console\.[^(]*/g, function () {
+                console.log(arguments);
+
+                let tempScript = arguments[2].replace(/console\.[^(]*/g, function () {
+                    return 'console' + arguments[1] + '=';
+                });
+                eval(tempScript);
+
+                return '#consoleStart#' + window['console' + arguments[1]] + '#consoleEnd#' + arguments[0];
+            });
+
+            // result = (result.replace(/(#consoleStart#)([^(#console)]*)(#consoleEnd#)(console[^;]*;)/g, '\n$4\n——————\n▸ $2\n——————\n'));
+            result = (result.replace(/(#consoleStart#)(((?!(#console))[\s\S])*((?!(#console)).)*)(#consoleEnd#)(console[^;]*;)/g, '\n$8\n——————\n▸ $2\n——————\n'));
+            console.log(result);
+            return result;
+        };
+
+        const url = new URL(window.location.href);
+        jsPath = url.searchParams.get('jsPath');
+        console.log(jsPath);
+        if (jsPath) {
+            fetch(jsPath)
+                .then(response => response.text())
+                .then(t => {
+
+                    let dom = document.getElementById('container');
+                    let script = insertConsoleResult(t);
+                    console.log(script);
+                    dom.innerHTML = script.split('\n').map(i => `<code>${i}</code>`).join('');
+                    [...dom.querySelectorAll('code')].map(d => {
+
+                        hljs.highlightBlock(d);
+                    })
+                });
+        }
+    </script>
+
+
+</body>
+
+</html>
